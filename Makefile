@@ -1,4 +1,4 @@
-CFLAGS	= $(shell pkg-config --cflags libsystemd) -Wall -O2 -g
+CFLAGS	= $(shell pkg-config --cflags libsystemd) -Wall -O2 -g -fPIC
 LDLIBS	= $(shell pkg-config --libs libsystemd)
 
 ifdef KERNEL_HEADERS
@@ -7,15 +7,13 @@ endif
 
 EXE = btbridged
 
-.PHONY += all
 all: $(EXE)
 
-.PHONY += test
-test: $(EXE) ipmi-bouncer bt-host
+check: $(EXE) ipmi-bouncer libbthost.so
+	./run_tests.sh
 
-bt-host: bt-host.c
-	gcc -shared -fPIC $(CFLAGS) $^ -o $@.so
+libbthost.so: bt-host.o
+	$(LINK.c) -shared $^ -o $@
 
 clean:
-	rm -rf *.o $(EXE)
-	rm -rf bt-host.so ipmi-bouncer
+	$(RM) *.o $(EXE) libbthost.so ipmi-bouncer

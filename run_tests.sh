@@ -1,7 +1,7 @@
 #!/bin/bash
 set -vx
 make KERNEL_HEADERS=${PWD} test
-LD_PRELOAD=${PWD}/bt-host.so ./btbridged --debug --verbose &
+LD_PRELOAD=${PWD}/libbthost.so ./btbridged --debug --verbose &
 bridge_pid=$!
 
 ./ipmi-bouncer &
