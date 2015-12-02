@@ -22,8 +22,8 @@ static sd_bus *bus;
 static int bttest_ipmi(sd_bus_message *req,
 		void *user_data, sd_bus_error *ret_error)
 {
-    sd_bus_error error = SD_BUS_ERROR_NULL;
-    sd_bus_message *reply = NULL, *m=NULL;
+    sd_bus_error error;
+    sd_bus_message *reply, *m;
     const char *dest, *path;
     int r, pty;
 	unsigned char seq, netfn, lun, cmd;
