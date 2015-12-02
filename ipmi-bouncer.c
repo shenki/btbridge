@@ -5,10 +5,19 @@
 
 #define PREFIX "[IPMI]"
 
-#define MSG_OUT(f_, ...) do { printf(PREFIX); printf((f_), ##__VA_ARGS__); } while(0)
-#define MSG_ERR(f_, ...) do { fprintf(stderr,PREFIX); fprintf(stderr, (f_), ##__VA_ARGS__); } while(0)
+#define MSG_OUT(f_, ...) \
+	do { \
+		printf(PREFIX); \
+		printf((f_), ##__VA_ARGS__); \
+	} while(0)
 
-sd_bus *bus;
+#define MSG_ERR(f_, ...) \
+	do { \
+		fprintf(stderr, PREFIX); \
+		fprintf(stderr, (f_), ##__VA_ARGS__); \
+	} while(0)
+
+static sd_bus *bus;
 
 static int bttest_ipmi(sd_bus_message *req,
 		void *user_data, sd_bus_error *ret_error)
